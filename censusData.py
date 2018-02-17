@@ -42,6 +42,11 @@ train = tf.train.AdamOptimizer().minimize(loss)  # replace with your code
 
 accuracy = dataUtils.accuracy(logits, label_placeholder)
 
+# summaries
+tf.summary.scalar('accuracy', accuracy)
+tf.summary.scalar('loss', loss)
+merged = tf.summary.merge_all()
+
 # Add ops to save and restore all the variables.
 saver = tf.train.Saver()
 
@@ -64,7 +69,7 @@ with tf.Session() as sess:
         if step_count % 10 == 0:
             batch_test_data, batch_test_labels = dataUtils.getBatch(data=test_data, labels=test_labels,
                                                                             batch_size=100)
-            test_accuracy, test_loss, logits_output = sess.run([accuracy, loss, logits], feed_dict={input_placeholder: batch_test_data, label_placeholder: batch_test_labels})
+            test_accuracy, test_loss, logits_output, _ = sess.run([accuracy, loss, logits, merged], feed_dict={input_placeholder: batch_test_data, label_placeholder: batch_test_labels})
 
 
             print("Step Count:{}".format(step_count))
