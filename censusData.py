@@ -22,11 +22,11 @@ input_placeholder = tf.placeholder(tf.float32, shape =[None, 113])
 # Neural network hidden layers
 w1 = tf.get_variable("w1", shape=[113,150], initializer=tf.contrib.layers.xavier_initializer())
 b1 = tf.get_variable("12", shape=[150], initializer=tf.contrib.layers.xavier_initializer())
-hidden_layer_1 = tf.nn.relu(tf.matmul(input_placeholder, w1) + b1)
+hidden_layer_1 = tf.nn.dropout(tf.nn.relu(tf.matmul(input_placeholder, w1) + b1), keep_prob=0.5)
 
 w2 = tf.get_variable("w2", shape=[150,125], initializer=tf.contrib.layers.xavier_initializer())
 b2 = tf.get_variable("b2", shape=[125], initializer=tf.contrib.layers.xavier_initializer())
-hidden_layer_2 = tf.nn.relu(tf.matmul(hidden_layer_1, w2) + b2)
+hidden_layer_2 = tf.nn.dropout(tf.nn.relu(tf.matmul(hidden_layer_1, w2) + b2), keep_prob=0.5)
 
 # Logit layer
 logits = tf.nn.softmax(tf.layers.dense(hidden_layer_2, 2, activation=None))  # replace with your code
