@@ -42,6 +42,9 @@ train = tf.train.AdamOptimizer().minimize(loss)  # replace with your code
 
 accuracy = dataUtils.accuracy(logits, label_placeholder)
 
+# Add ops to save and restore all the variables.
+saver = tf.train.Saver()
+
 # Make tensorflow session
 with tf.Session() as sess:
     # Initialize variables
@@ -72,3 +75,6 @@ with tf.Session() as sess:
         # stop training after 1,000 steps
         if step_count > 1000:
             break
+
+    # Save the variables to disk.
+    save_path = saver.save(sess, "model/model.ckpt")
