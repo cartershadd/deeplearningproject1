@@ -52,6 +52,7 @@ saver = tf.train.Saver()
 
 # Make tensorflow session
 with tf.Session() as sess:
+    train_writer = tf.summary.FileWriter("summary/project1", sess.graph)
     # Initialize variables
     sess.run(tf.global_variables_initializer())
 
